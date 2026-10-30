@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#070c18">
+  <title>VISIOREG™ — Système Intelligent de Gestion des Visiteurs & Contrôle d'Accès</title>
+  
+  <!-- Polices Google Fonts Modernes & Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Feuille de styles personnalisée -->
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+  // Navigation immédiate entre les sections majeures du portail
+  function showPortalSection(sectionId) {
+    document.querySelectorAll('.portal-section').forEach(s => {
+      s.classList.add('hidden');
+    });
+    const target = document.getElementById('portal-' + sectionId);
+    if (target) {
+      target.classList.remove('hidden');
+    }
+    document.querySelectorAll('.portal-nav-btn').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.getElementById('portal-btn-' + sectionId);
+    if (activeBtn) activeBtn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Si on entre dans la démo sur l'onglet stats, initialiser les graphiques
+    if (sectionId === 'demo') {
+      setTimeout(() => {
+        if (typeof initCharts === 'function') initCharts();
+      }, 100);
+    }
+  }
+
+  // Raccourci vers les frais préalables de démarrage
+  function scrollToStartupCosts() {
+    showPortalSection('devis');
+    setTimeout(() => {
+      const el = document.getElementById('startup-cost-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ============================================== -->
+  <!-- POPUP D'ACCUEIL OFFICIEL : CRÉDIT DU CONCEPTEUR -->
+  <!-- ============================================== -->
+  <div id="author-welcome-overlay" class="author-overlay">
+    <div class="author-modal">
+      <div class="author-modal-glow"></div>
+      <div class="author-badge-top">
+        <span class="shield-icon">🛡️</span>
+        <span>Plateforme Logicielle d'Entreprise & VMS</span>
+      </div>
+      <h2>Bienvenue dans l'Écosystème<br><span class="gradient-text">VISIOREG™</span></h2>
+      <p class="slogan-quote">« Chaque visite enregistrée, chaque accès maîtrisé. » 🚀</p>
+      
+      <p class="author-intro">
+        L'architecture globale, la proposition commerciale, le pipeline d'intelligence artificielle OCR 
+        et l'écosystème numérique de gestion des visiteurs pour entreprises ont été entièrement pensés, conçus et développés par :
+      </p>
+
+      <div class="author-card">
+        <div class="author-avatar">ST</div>
+        <div class="author-info">
+          <strong class="author-name">SERI TAGRO ROY</strong>
+          <span class="author-title">Architecte Logiciel & Ingénieur Full-Stack</span>
+          <span class="author-specialty">Expert Systèmes d'Information, Vision par Ordinateur & API Sécurisées</span>
+        </div>
+      </div>
+
+      <div class="author-features-list">
+        <div class="feat-pill">⚡ Scan OCR en 1.8s</div>
+        <div class="feat-pill">💬 Validation WhatsApp DG</div>
+        <div class="feat-pill">🎫 Badges QR Dynamiques</div>
+        <div class="feat-pill">🔐 Conformité Données ARTCI</div>
+      </div>
+
+      <div class="author-actions">
+        <button id="btn-enter-app" class="btn-primary" onclick="closeAuthorModal()">
+          <span>Découvrir le Projet & le Hub Officiel</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- EN-TÊTE PRINCIPAL & NAVIGATION GLOBALE PORTAIL -->
+  <!-- ============================================== -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-group" onclick="showPortalSection('cover')" style="cursor: pointer;">
+        <div class="logo-box">
+          <span class="logo-icon">🛡️</span>
+          <div class="pulse-indicator"></div>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <h1 class="brand-name">VISIOREG<span class="brand-tm">™</span></h1>
+            <span class="system-badge">VMS 3.4 PRO</span>
+          </div>
+          <p class="brand-sub">Registre Intelligent des Visiteurs & Contrôle d'Accès Numérique</p>
+        </div>
+      </div>
+
+      <!-- Liens de Navigation du Portail Officiel -->
+      <div class="portal-nav-links">
+        <button class="portal-nav-btn active" onclick="showPortalSection('cover')" id="portal-btn-cover">🏠 Accueil</button>
+        <button class="portal-nav-btn" onclick="showPortalSection('plan')" id="portal-btn-plan">🏛️ Architecture</button>
+        <button class="portal-nav-btn" onclick="showPortalSection('tech')" id="portal-btn-tech">💻 Stack &amp; Langages</button>
+        <button class="portal-nav-btn" onclick="showPortalSection('devis')" id="portal-btn-devis">💼 Budget &amp; Devis</button>
+        <button class="portal-nav-btn" onclick="scrollToStartupCosts()" id="portal-btn-startup">⚡ Frais de Démarrage</button>
+        <button class="portal-nav-btn btn-highlight" onclick="showPortalSection('demo')" id="portal-btn-demo">🚀 Démo en Direct</button>
+      </div>
+
+      <!-- Indicateurs de services & Signature Concepteur -->
+      <div class="header-actions-right">
+        <div class="system-status-pills">
+          <div class="status-pill online" title="OCR opérationnel">
+            <span class="status-dot"></span>
+            <span>OCR : <strong>99.4%</strong></span>
+          </div>
+          <div class="status-pill secure" title="Chiffrement AES-256">
+            <span class="status-dot"></span>
+            <span>AES-256</span>
+          </div>
+        </div>
+
+        <div class="header-author-badge" onclick="openAuthorModal()">
+          <span class="engineer-tag">Ingénierie & Conception</span>
+          <strong>SERI TAGRO ROY</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- PAGE 0 : LE HUB OFFICIEL / PAGE D'ACCUEIL      -->
+  <!-- ============================================== -->
+  <section id="portal-cover" class="portal-section">
+    <div class="cover-portal">
+      <!-- Hero du Portail -->
+      <div class="cover-hero">
+        <div class="hero-duo-avatars">
+          <div class="hero-logo-box">
+            <span class="hero-shield-logo">🛡️</span>
+            <div class="hero-logo-badge">VISIOREG™</div>
+          </div>
+          <div class="hero-engineer-box">
+            <div class="hero-engineer-avatar">ST</div>
+            <div class="hero-engineer-badge">SERI TAGRO ROY • Concepteur</div>
+          </div>
+        </div>
+
+        <span class="cover-church-tag">Système de Gestion des Visiteurs & Contrôle d'Accès (VMS)</span>
+
+        <h1 class="cover-main-title">
+          <span class="typewriter-wrapper">
+            <span class="gradient-text" id="typewriter-title">ARCHITECTURE GLOBALE & PROPOSITION COMMERCIALE</span><span class="typewriter-cursor">|</span>
+          </span><br>
+          Conception de la Plateforme d'Entreprise VISIOREG™
+        </h1>
+
+        <p class="cover-subtitle">
+          Proposition officielle de développement du système intelligent de gestion des visiteurs pour entreprise — Numérisation OCR automatique des pièces d'identité, validation hiérarchique sur smartphone, badges QR dynamiques et traçabilité des flux en temps réel.
+        </p>
+
+        <div class="cover-pastor-mention">
+          <span class="briefcase-icon">💼</span>
+          Présenté à : <strong>Direction Générale & Direction de la Sécurité</strong> • Conçu par <strong>SERI TAGRO ROY</strong>
+        </div>
+      </div>
+
+      <!-- Les 3 Grands Modules Cliquables (Comme dans l'ancien projet) -->
+      <div class="cover-modules-grid">
+        <!-- Module 1 : ARCHITECTURE DU PROJET -->
+        <div class="module-action-card card-plan" onclick="showPortalSection('plan')">
+          <div>
+            <span class="module-badge-tag tag-red">Module 1</span>
+            <div class="module-card-icon">🏛️</div>
+            <h3>Architecture Métier</h3>
+            <p>Feuille de route technique avec le workflow en 6 étapes, les 8 modules métiers et les 3 phases de déploiement.</p>
+            <ul class="module-card-features">
+              <li>8 modules métiers tout-en-un intégrés</li>
+              <li>Workflow en 6 étapes (Accueil → OCR → Badge → Sortie)</li>
+              <li>Feuille de route en 3 phases (Standard → Pro → Entreprise)</li>
+              <li>Contrôle d'accès, registre légal & évacuation incendie</li>
+            </ul>
+          </div>
+          <button class="btn-card-action btn-plan-action">
+            🏛️ Explorer l'Architecture Métier →
+          </button>
+        </div>
+
+        <!-- Module 2 : STACK TECHNIQUE & LANGAGES -->
+        <div class="module-action-card card-tech" onclick="showPortalSection('tech')">
+          <div>
+            <span class="module-badge-tag tag-blue">Module 2</span>
+            <div class="module-card-icon">💻</div>
+            <h3>Stack &amp; Langages</h3>
+            <p>Tous les langages de programmation, frameworks et technologies retenus pour concevoir l'application VISIOREG™.</p>
+            <ul class="module-card-features">
+              <li>React Moderne &amp; Progressive Web App (Tablette / Web)</li>
+              <li>Laravel 11 REST API, Sanctum &amp; WebSockets temps réel</li>
+              <li>Moteur IA Vision par Ordinateur (Google / Azure Vision)</li>
+              <li>PostgreSQL chiffré AES-256 &amp; Meta WhatsApp Business API</li>
+            </ul>
+          </div>
+          <button class="btn-card-action btn-tech-action">
+            💻 Découvrir les Langages &amp; Outils →
+          </button>
+        </div>
+
+        <!-- Module 3 : PROPOSITION BUDGÉTAIRE -->
+        <div class="module-action-card card-devis" onclick="showPortalSection('devis')">
+          <div>
+            <span class="module-badge-tag tag-gold">Module 3</span>
+            <div class="module-card-icon">💼</div>
+            <h3>Proposition Budgétaire</h3>
+            <p>Tarification transparente : les 3 packs clés en main, hébergement Cloud VPS et honoraires de conception.</p>
+            <ul class="module-card-features">
+              <li>Grille des 3 packs : Standard, Pro ⭐ et Entreprise</li>
+              <li>Infrastructures Cloud VPS dédié &amp; API Vision à l'usage</li>
+              <li>Honoraires de conception logicielle SERI TAGRO ROY</li>
+              <li>Échéancier de paiement par étapes (40% - 30% - 30%)</li>
+            </ul>
+          </div>
+          <button class="btn-card-action btn-devis-action">
+            💼 Consulter le Budget &amp; Devis →
+          </button>
+        </div>
+      </div>
+
+      <!-- Bannière d'accès direct à la Démo Interactive -->
+      <div class="cover-demo-banner" onclick="showPortalSection('demo')">
+        <div class="banner-demo-text">
+          <h4>🚀 Voir la Démonstration Interactive en Direct</h4>
+          <p>Testez le Kiosque Accueil avec scan laser OCR, la validation DG sur smartphone WhatsApp et la borne de sortie synchronisés en temps réel.</p>
+        </div>
+        <button class="btn-launch-demo">▶ Lancer la Démo VISIOREG™</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 1 : ARCHITECTURE MÉTIER & FEUILLE DE ROUTE-->
+  <!-- ============================================== -->
+  <section id="portal-plan" class="portal-section hidden">
+    <div class="page-container">
+      <div class="portal-top-bar">
+        <button class="btn-back-home" onclick="showPortalSection('cover')">← Retour à l'Accueil</button>
+        <button class="btn-launch-demo-mini" onclick="showPortalSection('demo')">▶ Tester la Démo</button>
+      </div>
+
+      <div class="portal-page-header">
+        <span class="pane-tag">Spécifications Fonctionnelles</span>
+        <h2>🏛️ Architecture Métier & Feuille de Route VISIOREG™</h2>
+        <p>Solution d'entreprise tout-en-un pour moderniser l'accueil physique, sécuriser les accès et automatiser la traçabilité des visiteurs.</p>
+      </div>
+
+      <!-- Carte d'Architecture Globale -->
+      <div class="unified-architecture-card">
+        <div class="unified-arch-header">
+          <div class="unified-arch-badge">
+            <span class="badge-dot blink"></span> SOLUTION GLOBALE EN 3 FORMULES PROGRESSIVES
+          </div>
+          <h3>Écosystème Numérique Intégré de Gestion des Visiteurs</h3>
+          <p class="unified-arch-sub">
+            Déploiement complet et coordonné comprenant le Kiosque Accueil Tablette/PC (Agent), le Moteur OCR Intelligent, l'application de validation mobile pour la Direction et la Borne de Check-Out.
+          </p>
+          <div class="unified-arch-stats-row">
+            <div class="arch-stat-badge">📦 <strong>8 Modules Métiers</strong> Intégrés</div>
+            <div class="arch-stat-badge">⚡ <strong>Scan OCR en 1.8s</strong> Instantané</div>
+            <div class="arch-stat-badge">📱 <strong>Validation WhatsApp DG</strong> en 1 Clic</div>
+            <div class="arch-stat-badge">🔒 <strong>Conformité ARTCI / RGPD</strong> Garantie</div>
+          </div>
+        </div>
+
+        <!-- Les 3 Piliers de Déploiement -->
+        <div class="unified-pillars-grid">
+          <!-- Pilier 1 : FONDATION & OCR -->
+          <div class="arch-pillar-box pillar-1">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag tag-red">Phase 1 — Standard</span>
+              <h4>Fondation & Numérisation OCR</h4>
+              <span class="pillar-time">⏱ Durée : 3 à 4 semaines</span>
+            </div>
+            <div class="arch-pillar-features">
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🪪</span>
+                <div>
+                  <strong>Kiosque d'Accueil Agent</strong>
+                  <p>Interface tactile fluide optimisée pour tablette et PC d'accueil.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> Zéro papier</div>
+                </div>
+              </div>
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">⚡</span>
+                <div>
+                  <strong>Moteur OCR Intelligent Multi-Documents</strong>
+                  <p>Lecture automatique des CNI ivoiriennes/CEDEAO, passeports OACI et permis.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> Précision > 99%</div>
+                </div>
+              </div>
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">📋</span>
+                <div>
+                  <strong>Registre Digital & Recherche Multicritère</strong>
+                  <p>Historique centralisé, recherche en 2 secondes et export Excel/CSV.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> Infalsifiable</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pilier 2 : PRO INTÉGRÉ -->
+          <div class="arch-pillar-box pillar-2">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag tag-blue">Phase 2 — Professionnelle ⭐</span>
+              <h4>Tout-en-Un & Contrôle d'Accès</h4>
+              <span class="pillar-time">⏱ Durée : 5 à 6 semaines</span>
+            </div>
+            <div class="arch-pillar-features">
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">💬</span>
+                <div>
+                  <strong>Notifications WhatsApp Business & SMS</strong>
+                  <p>Alerte immédiate du collaborateur ou de la Direction avec fiche du visiteur.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> Taux ouverture 98%</div>
+                </div>
+              </div>
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">📲</span>
+                <div>
+                  <strong>Validation Hiérarchique en 1 Clic</strong>
+                  <p>Le DG accepte, temporise ou refuse l'accès directement depuis son mobile.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> Workflow interactif</div>
+                </div>
+              </div>
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🎫</span>
+                <div>
+                  <strong>Génération & Impression Badges QR Code</strong>
+                  <p>Badge physique thermique ou pass numérique envoyé par WhatsApp au visiteur.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> QR crypté unique</div>
+                </div>
+              </div>
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">📟</span>
+                <div>
+                  <strong>Borne Check-Out & Clôture Sortie</strong>
+                  <p>Horodatage du départ, calcul du temps de présence et alerte dépassement.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> Sécurité temps réel</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pilier 3 : ENTREPRISE HAUTE SÉCURITÉ -->
+          <div class="arch-pillar-box pillar-3">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag tag-gold">Phase 3 — Entreprise</span>
+              <h4>Haute Sécurité & Multi-Sites</h4>
+              <span class="pillar-time">⏱ Durée : 7 à 8 semaines</span>
+            </div>
+            <div class="arch-pillar-features">
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🏢</span>
+                <div>
+                  <strong>Déploiement Multi-Sites & Multi-Bâtiments</strong>
+                  <p>Supervision consolidée jusqu'à 5 sites avec base de données synchronisée.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> Réseau Groupe</div>
+                </div>
+              </div>
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">👁️</span>
+                <div>
+                  <strong>Reconnaissance Faciale Visiteurs Réguliers</strong>
+                  <p>Identification automatique à l'entrée pour les VIP et prestataires récurrents.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> IA Biométrique</div>
+                </div>
+              </div>
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🚪</span>
+                <div>
+                  <strong>Connexion Portiques & Tourniquets d'Accès</strong>
+                  <p>Ouverture automatisée des barrières physiques sur scan du badge QR.</p>
+                  <div class="feature-cost-note cost-free"><span class="cost-tag-pill free">Inclus</span> Contrôle physique</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 2 : STACK TECHNIQUE & LANGAGES            -->
+  <!-- ============================================== -->
+  <section id="portal-tech" class="portal-section hidden">
+    <div class="page-container">
+      <div class="portal-top-bar">
+        <button class="btn-back-home" onclick="showPortalSection('cover')">← Retour à l'Accueil</button>
+        <button class="btn-launch-demo-mini" onclick="showPortalSection('demo')">▶ Tester la Démo</button>
+      </div>
+
+      <div class="portal-page-header">
+        <span class="pane-tag">Technologies & Ingénierie</span>
+        <h2>💻 Stack Technique, Outils & Intelligence Artificielle</h2>
+        <p>Une architecture logicielle moderne, modulaire et hautement sécurisée assurant fiabilité 24h/24.</p>
+      </div>
+
+      <div class="tech-grid-detailed">
+        <!-- Brique 1 : Frontend -->
+        <div class="tech-card-detailed">
+          <div class="tech-card-head">
+            <span class="tech-cat-badge">Frontend & Kiosques</span>
+            <h3>React & Progressive Web App (PWA)</h3>
+          </div>
+          <p>Interface réactive à 60 FPS, tactile et compatible tablettes iPad, Android, PC d'accueil et bornes autonomes.</p>
+          <ul class="tech-points-list">
+            <li><strong>Zéro installation lourde :</strong> Déploiement instantané via URL sécurisée HTTPS.</li>
+            <li><strong>Mode Kiosque Plein Écran :</strong> Verrouillage de l'interface pour les agents de réception.</li>
+            <li><strong>Intégration Caméra Native :</strong> Prise de vue HD et détourage automatique du portrait.</li>
+          </ul>
+        </div>
+
+        <!-- Brique 2 : Backend API -->
+        <div class="tech-card-detailed">
+          <div class="tech-card-head">
+            <span class="tech-cat-badge">Cœur Applicatif</span>
+            <h3>Laravel 11 REST API & Microservices</h3>
+          </div>
+          <p>Le framework d'entreprise le plus robuste pour gérer les authentifications JWT, les permissions RBAC et les webhooks.</p>
+          <ul class="tech-points-list">
+            <li><strong>Laravel Sanctum :</strong> Sécurisation des terminaux par jetons révocables.</li>
+            <li><strong>Redis Queue Asynchrone :</strong> Dispatching instantané des notifications WhatsApp et SMS.</li>
+            <li><strong>Journalisation d'audit :</strong> Traçabilité de chaque scan, validation et checkout.</li>
+          </ul>
+        </div>
+
+        <!-- Brique 3 : Moteur OCR Vision -->
+        <div class="tech-card-detailed">
+          <div class="tech-card-head">
+            <span class="tech-cat-badge">Intelligence Artificielle</span>
+            <h3>Google Cloud Vision & Azure AI Vision</h3>
+          </div>
+          <p>Pipeline de traitement d'images haute performance extrayant 7 champs en moins de 1.8 seconde avec 99.4% de précision.</p>
+          <ul class="tech-points-list">
+            <li><strong>Algorithme de redressement :</strong> Correction automatique de la perspective et des reflets.</li>
+            <li><strong>Décodage MRZ OACI 9303 :</strong> Lecture certifiée de la bande passeport internationale.</li>
+            <li><strong>Extraction de visage :</strong> Découpage automatique du portrait officiel pour la fiche.</li>
+          </ul>
+        </div>
+
+        <!-- Brique 4 : Base de Données & Sécurité -->
+        <div class="tech-card-detailed">
+          <div class="tech-card-head">
+            <span class="tech-cat-badge">Données & Cryptographie</span>
+            <h3>PostgreSQL Chiffré AES-256 & ARTCI</h3>
+          </div>
+          <p>Base relationnelle hautement sécurisée avec conformité stricte aux lois sur la protection des données personnelles.</p>
+          <ul class="tech-points-list">
+            <li><strong>Chiffrement au repos :</strong> Pièces d'identité stockées sous chiffrement fort AES-256 bits.</li>
+            <li><strong>Purge automatique légale :</strong> Suppression paramétrable des images après 30 ou 90 jours.</li>
+            <li><strong>Conformité ARTCI / RGPD :</strong> Droits d'accès et non-divulgation visuelle aux tiers.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 3 : PROPOSITION BUDGÉTAIRE & DEVIS        -->
+  <!-- ============================================== -->
+  <section id="portal-devis" class="portal-section hidden">
+    <div class="page-container">
+      <div class="portal-top-bar">
+        <button class="btn-back-home" onclick="showPortalSection('cover')">← Retour à l'Accueil</button>
+        <button class="btn-launch-demo-mini" onclick="showPortalSection('demo')">▶ Tester la Démo</button>
+      </div>
+
+      <div class="portal-page-header">
+        <span class="pane-tag">Investissement & Tarification</span>
+        <h2>💼 Proposition Budgétaire & Modalités de Règlement</h2>
+        <p>Grille tarifaire claire, transparente et sans redevance d'abonnement logiciel caché.</p>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- INTERFACE DÉDIÉE : SERVICES EN LIGNE & ACOMPTE DÉMARRAGE -->
+      <!-- ============================================== -->
+      <div class="startup-cost-card" id="startup-cost-section">
+        <div class="startup-header">
+          <div class="startup-badge-alert">
+            <span>⚠️ CONDITION PRÉALABLE D'ENGAGEMENT DU PROJET</span>
+          </div>
+          <h3 class="startup-title">Montant Initial Requis au Démarrage : Acquisition des Services Cloud &amp; API</h3>
+          <p class="startup-intro-text">
+            Pour débuter le projet, le versement de <strong>l'acompte de démarrage (Jalon 1 — 40%)</strong> est strictement obligatoire.
+            Ce montant n'est pas qu'un acompte d'honoraires : il sert immédiatement à <strong>acheter, louer et provisionner l'ensemble des infrastructures en ligne et clés d'API indispensables</strong> au fonctionnement de la plateforme VISIOREG™.
+            Sans ces services activés au nom de votre entreprise dès le Jour 1, aucun développement ni test d'extraction OCR de pièces d'identité ne peut débuter.
+          </p>
+        </div>
+
+        <!-- Grille des 5 Services en Ligne à Acheter / Louer -->
+        <div class="startup-services-grid">
+          <!-- Service 1 : VPS CLOUD -->
+          <div class="service-item-card">
+            <div class="service-card-top">
+              <span class="service-icon">🌐</span>
+              <span class="service-provider-tag">OVH Cloud / Hostinger</span>
+            </div>
+            <h4>Serveur Cloud Dédié VPS Haute Sécurité</h4>
+            <p>Hébergement isolé de l'API Laravel, de la base PostgreSQL chiffrée, adresse IP dédiée, disponibilité 24h/24 et sauvegardes quotidiennes répliquées.</p>
+            <div class="service-cost-row">
+              <span class="service-cost-label">Location Annuelle (12 mois) :</span>
+              <div>
+                <span class="service-cost-value">230 000 FCFA</span>
+                <span class="service-frequency">(soit 22 000 F / mois)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 2 : NOM DE DOMAINE & SSL -->
+          <div class="service-item-card">
+            <div class="service-card-top">
+              <span class="service-icon">🔒</span>
+              <span class="service-provider-tag">ARTCI (.ci) / OVH (.com)</span>
+            </div>
+            <h4>Nom de Domaine Officiel &amp; Certificat SSL HTTPS</h4>
+            <p>Adresse web officielle exclusive (ex: <code>visiteurs.entreprise.ci</code>) et certificat SSL 256 bits obligatoire pour certifier les Webhooks WhatsApp et l'accès sécurisé.</p>
+            <div class="service-cost-row">
+              <span class="service-cost-label">Achat Annuel Officiel :</span>
+              <div>
+                <span class="service-cost-value">18 000 FCFA</span>
+                <span class="service-frequency">par an</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 3 : API MOTEUR OCR -->
+          <div class="service-item-card">
+            <div class="service-card-top">
+              <span class="service-icon">⚡</span>
+              <span class="service-provider-tag">Google Cloud / Azure Vision</span>
+            </div>
+            <h4>Moteur d'IA OCR Documentaire (Vision API)</h4>
+            <p>Compte développeur et crédits de requêtes pour la reconnaissance automatique des CNI, passeports biométriques et permis de conduire en moins de 1.8 seconde.</p>
+            <div class="service-cost-row">
+              <span class="service-cost-label">Crédits de Lancement :</span>
+              <div>
+                <span class="service-cost-value">35 000 FCFA</span>
+                <span class="service-frequency">~35 000 scans inclus</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 4 : WHATSAPP BUSINESS & SMS -->
+          <div class="service-item-card">
+            <div class="service-card-top">
+              <span class="service-icon">📲</span>
+              <span class="service-provider-tag">Meta Cloud API / Agrégateur</span>
+            </div>
+            <h4>Passerelle WhatsApp Business API &amp; SMS Pro</h4>
+            <p>Numéro professionnel vérifié et pack de notifications interactives pour alerter instantanément le DG et les collaborateurs sur leur smartphone avec boutons Accepter/Refuser.</p>
+            <div class="service-cost-row">
+              <span class="service-cost-label">Activation &amp; Pack Initial :</span>
+              <div>
+                <span class="service-cost-value">45 000 FCFA</span>
+                <span class="service-frequency">2 500 alertes pro</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 5 : STOCKAGE CHIFFRÉ & SÉCURITÉ -->
+          <div class="service-item-card">
+            <div class="service-card-top">
+              <span class="service-icon">🛡️</span>
+              <span class="service-provider-tag">S3 Vault / Redis Cloud</span>
+            </div>
+            <h4>Stockage Cloud Chiffré AES-256 &amp; Files Redis</h4>
+            <p>Coffre-fort numérique chiffré pour conserver les captures de pièces de manière conforme aux exigences légales de protection des données (ARTCI / RGPD).</p>
+            <div class="service-cost-row">
+              <span class="service-cost-label">Provisionnement Initial :</span>
+              <div>
+                <span class="service-cost-value">25 000 FCFA</span>
+                <span class="service-frequency">chiffrement matériel</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte 6 : TOTAL SERVICES EXTERNES -->
+          <div class="service-item-card" style="background: rgba(6, 182, 212, 0.08); border-color: var(--cyan);">
+            <div class="service-card-top">
+              <span class="service-icon">💼</span>
+              <span class="service-provider-tag" style="background: var(--cyan); color: #000; font-weight:800;">TOTAL SERVICES EN LIGNE</span>
+            </div>
+            <h4>Total Frais Techniques Externes à Prévoir</h4>
+            <p>Ces montants correspondent aux frais réels facturés par les hébergeurs et fournisseurs Cloud (OVH, Google, Meta). Ils sont intégralement financés par l'acompte de démarrage.</p>
+            <div class="service-cost-row">
+              <span class="service-cost-label">Coût Global des Services :</span>
+              <div>
+                <span class="service-cost-value" style="color: #67e8f9; font-size: 1.35rem;">353 000 FCFA</span>
+                <span class="service-frequency">provisionnement 12 mois</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Récapitulatif Acompte de Démarrage selon la Formule -->
+        <div class="startup-summary-banner">
+          <div class="summary-col-total">
+            <span>Frais Techniques Externes Immédiats :</span>
+            <strong>353 000 FCFA</strong>
+            <small style="color: var(--text-dim);">VPS 1 an + Domaine .ci + API OCR + WhatsApp API</small>
+          </div>
+
+          <div class="summary-col-downpayment">
+            <span>Acompte de Démarrage Requis (Jalon 1 — 40%) :</span>
+            <strong>1 120 000 FCFA</strong>
+            <small>(Sur la Version Professionnelle ⭐ : 353 000 F services Cloud + 767 000 F démarrage ingénierie)</small>
+          </div>
+
+          <div style="flex-shrink:0;">
+            <button class="btn-primary" onclick="alert('L\'acompte de démarrage de 40% active immédiatement la souscription de votre serveur Cloud VPS dédié et le provisionnement des API OCR et WhatsApp au nom officiel de votre entreprise.')">
+              <span>Valider le Démarrage &amp; Acompte</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mention de Souveraineté & Propriété Client -->
+        <div class="startup-sovereignty-badge">
+          <span class="sovereignty-icon">🛡️</span>
+          <div>
+            <strong>100% Propriété Exclusive de Votre Entreprise :</strong>
+            L'ensemble des services en ligne (serveur Cloud VPS, nom de domaine, clés d'API OCR et WhatsApp) sont souscrits et enregistrés directement au nom juridique de votre structure.
+            Vous en êtes le propriétaire exclusif à vie, garantissant la sécurité et la souveraineté totale sur vos données.
+          </div>
+        </div>
+      </div>
+
+      <!-- Grille des 3 packs avec Détail des Coûts & Services Gratuits/Payants -->
+      <div class="pricing-cards-grid">
+        <!-- PACK STANDARD -->
+        <div class="pricing-plan-card">
+          <div class="plan-head">
+            <span class="plan-tag">Fondation & OCR</span>
+            <h3 class="plan-name">Version Standard</h3>
+            <p class="plan-desc">Pour un site d'accueil souhaitant remplacer le registre papier par l'OCR numérique.</p>
+          </div>
+          <div class="plan-price-box">
+            <span class="plan-amount">1 800 000</span>
+            <span class="plan-currency">FCFA</span>
+            <span class="plan-billing">Paiement échelonné en 3 tranches</span>
+          </div>
+
+          <!-- Ventilation des coûts du pack -->
+          <div class="plan-breakdown-box">
+            <div class="breakdown-line">
+              <span>Frais Ingénierie Logicielle :</span>
+              <strong style="color: #fff;">1 552 000 F</strong>
+            </div>
+            <div class="breakdown-line">
+              <span>Hébergement VPS & Domaine (1 an) :</span>
+              <strong style="color: #38bdf8;">248 000 F</strong>
+            </div>
+            <div class="breakdown-line highlight">
+              <span>Total Package Clé en Main :</span>
+              <span>1 800 000 F</span>
+            </div>
+            <div style="font-size: 0.68rem; color: #94a3b8; margin-top: 4px;">
+              Coût récurrent après 1 an : ~248 000 F/an (VPS + Domaine uniquement)
+            </div>
+          </div>
+
+          <ul class="plan-features">
+            <li>
+              <div class="feature-title-row">
+                <strong>📱 Kiosque Web / Tablette</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Application PWA multi-supports : zéro licence logicielle récurrente par poste.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>⚡ OCR Vision Pièces d'Identité</strong>
+                <span class="cost-pill paid">PAYANT TIERS</span>
+              </div>
+              <div class="feature-cost-desc">API Google Cloud Vision (~1 F/scan). 1 000 scans/mois gratuits + crédits inclus.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>👥 Enregistrement Illimité</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Base PostgreSQL chiffrée sans aucun plafond du nombre de visiteurs enregistrés.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>🔍 Registre & Recherche Flash</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Moteur de recherche multicritère et archivage légal sans logiciel tiers.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>📊 Exports Excel & PDF Certifié</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Extraction et rapports légaux illimités, zéro abonnement de reporting.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>📧 Alertes E-mail Standard</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Connexion sur votre serveur SMTP d'entreprise existant (sans frais ajoutés).</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <span style="color: #64748b;">🎫 Badges QR Code Thermiques</span>
+                <span class="cost-pill optional">OPTION MATÉRIEL</span>
+              </div>
+              <div class="feature-cost-desc">Option nécessitant l'acquisition d'une imprimante thermique (+ 150 000 F).</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <span style="color: #64748b;">📲 WhatsApp API & Validation DG</span>
+                <span class="cost-pill optional">NON INCLUS</span>
+              </div>
+              <div class="feature-cost-desc">Fonctionnalité disponible dans la Version Professionnelle.</div>
+            </li>
+          </ul>
+          <button class="btn-select-plan" onclick="selectProposalPlan('STANDARD')">Sélectionner cette Formule</button>
+        </div>
+
+        <!-- PACK PROFESSIONNEL (FEATURED) -->
+        <div class="pricing-plan-card featured">
+          <div class="featured-ribbon">⭐ LE PLUS CHOISI</div>
+          <div class="plan-head">
+            <span class="plan-tag text-cyan">Tout-en-Un Intégré</span>
+            <h3 class="plan-name">Version Professionnelle</h3>
+            <p class="plan-desc">La solution complète avec badges QR, WhatsApp interactif, validation DG et check-out.</p>
+          </div>
+          <div class="plan-price-box">
+            <span class="plan-amount text-cyan">2 800 000</span>
+            <span class="plan-currency">FCFA</span>
+            <span class="plan-billing">Paiement échelonné (40% - 30% - 30%)</span>
+          </div>
+
+          <!-- Ventilation des coûts du pack Pro -->
+          <div class="plan-breakdown-box">
+            <div class="breakdown-line">
+              <span>Honoraires Ingénierie & Déploiement :</span>
+              <strong style="color: #fff;">2 447 000 F</strong>
+            </div>
+            <div class="breakdown-line">
+              <span>Pack Services Cloud & API Inclus (1 an) :</span>
+              <strong style="color: #38bdf8;">353 000 F</strong>
+            </div>
+            <div class="breakdown-line highlight">
+              <span>Total Package Clé en Main :</span>
+              <span style="color: #67e8f9;">2 800 000 F</span>
+            </div>
+            <div style="font-size: 0.68rem; color: #94a3b8; margin-top: 4px;">
+              Services inclus 1 an : VPS Dédié (230k) + Domaine (18k) + OCR (35k) + WhatsApp (45k) + S3 (25k)
+            </div>
+          </div>
+
+          <ul class="plan-features">
+            <li>
+              <div class="feature-title-row">
+                <strong>🏛️ Tout le Pack Standard Inclus</strong>
+                <span class="cost-pill included">INCLUS DANS PACK</span>
+              </div>
+              <div class="feature-cost-desc">Kiosque tactile, OCR instantané, registre sécurisé et exports certifiés.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>🎫 Badges QR Dématérialisés</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Envoi direct sur smartphone par WhatsApp/SMS : 0 FCFA de matériel ni papier.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>📲 WhatsApp Business & SMS Pro</strong>
+                <span class="cost-pill paid">PAYANT TIERS (INCLUS)</span>
+              </div>
+              <div class="feature-cost-desc">Pack initial de 2 500 alertes interactives inclus (~15 F/message facturé par Meta).</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>🛡️ Validation DG Mobile en 1 Clic</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Interface mobile PWA décisionnelle avec boutons Accepter/Refuser sans surcoût.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>📟 Borne de Check-Out Autonome</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Clôture des sorties par scan du QR Code du badge : 0 FCFA de licence.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>🔥 Mode Évacuation Incendie HSE</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Comptage en temps réel des personnes sur site & export PDF officiel pour pompiers.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>📈 Tableau de Bord & KPIs Flux</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Analytique d'affluence, temps de visite moyen et motifs fréquents en temps réel.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>🛠️ Support & Garantie VIP (6 Mois)</strong>
+                <span class="cost-pill included">INCLUS DANS PACK</span>
+              </div>
+              <div class="feature-cost-desc">Assistance directe par l'architecte SERI TAGRO ROY et correctifs prioritaires.</div>
+            </li>
+          </ul>
+          <button class="btn-select-plan primary" onclick="selectProposalPlan('PRO')">Retenir la Formule Pro</button>
+        </div>
+
+        <!-- PACK ENTREPRISE -->
+        <div class="pricing-plan-card">
+          <div class="plan-head">
+            <span class="plan-tag">Haute Sécurité & Multi-Sites</span>
+            <h3 class="plan-name">Version Entreprise</h3>
+            <p class="plan-desc">Pour les sièges bancaires, industries et institutions à très haute exigence sécuritaire.</p>
+          </div>
+          <div class="plan-price-box">
+            <span class="plan-amount">4 500 000</span>
+            <span class="plan-currency">FCFA</span>
+            <span class="plan-billing">Paiement échelonné en 4 tranches</span>
+          </div>
+
+          <!-- Ventilation des coûts du pack Entreprise -->
+          <div class="plan-breakdown-box">
+            <div class="breakdown-line">
+              <span>Ingénierie & Haute Sécurité :</span>
+              <strong style="color: #fff;">3 950 000 F</strong>
+            </div>
+            <div class="breakdown-line">
+              <span>Infra Cloud Redondante (1 an) :</span>
+              <strong style="color: #38bdf8;">550 000 F</strong>
+            </div>
+            <div class="breakdown-line highlight">
+              <span>Total Package Clé en Main :</span>
+              <span>4 500 000 F</span>
+            </div>
+            <div style="font-size: 0.68rem; color: #94a3b8; margin-top: 4px;">
+              Comprend VPS Haute Performance, réplication multi-zones et infogérance VIP 12 mois.
+            </div>
+          </div>
+
+          <ul class="plan-features">
+            <li>
+              <div class="feature-title-row">
+                <strong>💼 Tout le Pack Pro Inclus</strong>
+                <span class="cost-pill included">INCLUS DANS PACK</span>
+              </div>
+              <div class="feature-cost-desc">Ensemble complet des modules accueil, OCR, WhatsApp, check-out et évacuation.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>🏢 Déploiement Multi-Sites (5 Sites)</strong>
+                <span class="cost-pill included">INCLUS DANS PACK</span>
+              </div>
+              <div class="feature-cost-desc">Synchronisation temps réel de plusieurs bâtiments avec console centrale unifiée.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>👤 Reconnaissance Faciale Biométrique</strong>
+                <span class="cost-pill paid">PAYANT TIERS (INCLUS)</span>
+              </div>
+              <div class="feature-cost-desc">API Face Matching pour visiteurs réguliers, prestataires et collaborateurs.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>📅 Portail Web de Pré-Enregistrement</strong>
+                <span class="cost-pill free">0 FCFA • GRATUIT</span>
+              </div>
+              <div class="feature-cost-desc">Invitation en ligne avec QR Code envoyé par e-mail/SMS avant l'arrivée du visiteur.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>🚪 Interconnexion Barrières & Portiques</strong>
+                <span class="cost-pill optional">SUR DEVIS MATÉRIEL</span>
+              </div>
+              <div class="feature-cost-desc">Déclenchement automatique des gâches et tourniquets via relais IP / Wiegand.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>🔐 Chiffrement HSM & Sauvegarde Déportée</strong>
+                <span class="cost-pill paid">SERVICES INCLUS</span>
+              </div>
+              <div class="feature-cost-desc">Coffre-fort étanche et sauvegardes horaires redondées hors-site.</div>
+            </li>
+            <li>
+              <div class="feature-title-row">
+                <strong>👑 Infogérance & Support VIP (12 Mois)</strong>
+                <span class="cost-pill included">INCLUS DANS PACK</span>
+              </div>
+              <div class="feature-cost-desc">Astreinte 24/7, hotline prioritaire sous 2h et maintenance évolutive continue.</div>
+            </li>
+          </ul>
+          <button class="btn-select-plan" onclick="selectProposalPlan('ENTERPRISE')">Demander la Version Entreprise</button>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- MATRICE DE TRANSPARENCE : DÉTAIL DES SERVICES GRATUITS VS PAYANTS -->
+      <!-- ============================================== -->
+      <div class="costs-audit-table-card">
+        <div class="audit-table-header">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <span class="plan-tag text-cyan">Transparence Budgétaire Totale</span>
+              <h3>🔍 Matrice d'Audit des Coûts : Services Gratuits vs Services Payants en Ligne</h3>
+              <p>Détail exhaustif des technologies retenues par SERI TAGRO ROY : identifiez précisément ce qui est 100% gratuit et libre de droit versus ce qui nécessite un abonnement tiers en ligne.</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <span class="cost-pill free" style="padding: 6px 12px; font-size: 0.75rem;">0 FCFA = 6 Modules Gratuits</span>
+              <span class="cost-pill paid" style="padding: 6px 12px; font-size: 0.75rem;">Services Tiers Réels Inclus 1 an</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="audit-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+              <tr>
+                <th>Composant / Module</th>
+                <th>Technologie / Prestataire</th>
+                <th>Statut Financier</th>
+                <th>Coût Unitaire / Facturation</th>
+                <th>Prise en Charge VISIOREG™</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>📱 Kiosque Accueil & Enregistrement</strong></td>
+                <td>Application Web Progressive (React/PWA)</td>
+                <td><span class="cost-pill free">100% GRATUIT • 0 FCFA</span></td>
+                <td>0 F / mois (Aucune licence)</td>
+                <td><strong style="color: #34d399;">Zéro redevance logicielle à vie</strong>, multi-postes illimité.</td>
+              </tr>
+              <tr>
+                <td><strong>⚡ Moteur d'Extraction OCR CNI/Passeport</strong></td>
+                <td>Google Cloud Vision API / Azure AI</td>
+                <td><span class="cost-pill paid">PAYANT TIERS (CLOUD)</span></td>
+                <td>~1 FCFA par scan (1 000 gratuits/mois)</td>
+                <td><strong>35 000 F de crédits inclus</strong> (environ 35 000 scans couverts).</td>
+              </tr>
+              <tr>
+                <td><strong>📲 Validation Mobile DG & Alertes</strong></td>
+                <td>Meta WhatsApp Business Cloud API</td>
+                <td><span class="cost-pill paid">PAYANT TIERS (META)</span></td>
+                <td>~15 FCFA par message interactif</td>
+                <td><strong>Pack 2 500 messages inclus</strong> (45 000 F) dans la formule Pro.</td>
+              </tr>
+              <tr>
+                <td><strong>🔔 Notifications Push PWA Collaborateurs</strong></td>
+                <td>Google Firebase Cloud Messaging (FCM)</td>
+                <td><span class="cost-pill free">100% GRATUIT • 0 FCFA</span></td>
+                <td>0 F (Volume illimité)</td>
+                <td><strong style="color: #34d399;">Gratuit & Illimité</strong> sur smartphones et ordinateurs.</td>
+              </tr>
+              <tr>
+                <td><strong>🌐 Hébergement & Serveur d'Application</strong></td>
+                <td>VPS Cloud Dédié OVH / Hostinger</td>
+                <td><span class="cost-pill paid">PAYANT TIERS (HÉBERGEUR)</span></td>
+                <td>22 000 F/mois (230 000 F/an)</td>
+                <td><strong>12 Mois d'hébergement VPS inclus</strong> au nom de votre entreprise.</td>
+              </tr>
+              <tr>
+                <td><strong>🗄️ Base de Données Sécurisée</strong></td>
+                <td>PostgreSQL Chiffré AES-256</td>
+                <td><span class="cost-pill free">100% GRATUIT • 0 FCFA</span></td>
+                <td>0 F (Moteur Open-Source)</td>
+                <td><strong style="color: #34d399;">Aucune licence Oracle/SQL Server</strong>, économie majeure.</td>
+              </tr>
+              <tr>
+                <td><strong>🔒 Nom de Domaine & Sécurité SSL</strong></td>
+                <td>Registre ARTCI (.ci) + Let's Encrypt</td>
+                <td><span class="cost-pill paid">PAYANT (DOMAINE)</span></td>
+                <td>Domaine: 18 000 F/an • SSL: 0 F</td>
+                <td><strong>Domaine officiel 1 an inclus</strong> + Certificat SSL HTTPS gratuit à vie.</td>
+              </tr>
+              <tr>
+                <td><strong>📟 Borne Sortie Check-Out Autonome</strong></td>
+                <td>Moteur Web PWA + Décodeur QR</td>
+                <td><span class="cost-pill free">100% GRATUIT • 0 FCFA</span></td>
+                <td>0 F (Intégré dans le code)</td>
+                <td><strong style="color: #34d399;">0 FCFA</strong>, fonctionne sur n'importe quelle tablette ou webcam.</td>
+              </tr>
+              <tr>
+                <td><strong>🎫 Badges Visiteurs Numériques</strong></td>
+                <td>QR Code dynamique par WhatsApp/SMS</td>
+                <td><span class="cost-pill free">100% GRATUIT • 0 FCFA</span></td>
+                <td>0 F de consommable</td>
+                <td><strong style="color: #34d399;">Zéro papier, zéro plastique</strong>, badge numérique sur smartphone.</td>
+              </tr>
+              <tr>
+                <td><strong>🖨️ Impression Thermique Badges (Option)</strong></td>
+                <td>Imprimante Thermique ESC/POS 80mm</td>
+                <td><span class="cost-pill optional">OPTION MATÉRIEL</span></td>
+                <td>150 000 F (Achat unique matériel)</td>
+                <td>Optionnel si l'entreprise souhaite des badges papier physiques.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 4 : LA DÉMONSTRATION INTERACTIVE EN DIRECT-->
+  <!-- ============================================== -->
+  <section id="portal-demo" class="portal-section hidden">
+    
+    <!-- Barre de Contrôle de la Démo Interactive (Sous-onglets) -->
+    <div class="demo-subnav-bar">
+      <div class="demo-subnav-container">
+        <button class="subnav-tab active" data-tab="tab-kiosk" onclick="switchDemoTab('tab-kiosk')">
+          <span class="tab-icon">🪪</span>
+          <span>Kiosque Accueil &amp; OCR</span>
+        </button>
+        <button class="subnav-tab" data-tab="tab-validation" onclick="switchDemoTab('tab-validation')">
+          <span class="tab-icon">📲</span>
+          <span>Validation Direction (DG)</span>
+          <span class="badge-count" id="pending-badge-count">1</span>
+        </button>
+        <button class="subnav-tab" data-tab="tab-checkout" onclick="switchDemoTab('tab-checkout')">
+          <span class="tab-icon">📟</span>
+          <span>Borne Sorties (Check-Out)</span>
+        </button>
+        <button class="subnav-tab" data-tab="tab-register" onclick="switchDemoTab('tab-register')">
+          <span class="tab-icon">📋</span>
+          <span>Registre &amp; Évacuation</span>
+          <span class="badge-active-visitors" id="active-visitors-count">3 présents</span>
+        </button>
+        <button class="subnav-tab" data-tab="tab-stats" onclick="switchDemoTab('tab-stats')">
+          <span class="tab-icon">📊</span>
+          <span>Tableau de Bord &amp; KPIs</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <!-- ────────────────────────────────────────────── -->
+      <!-- DÉMO SOUS-ONGLET 1 : KIOSQUE ACCUEIL & OCR     -->
+      <!-- ────────────────────────────────────────────── -->
+      <div id="tab-kiosk" class="demo-pane active">
+        <div class="pane-header">
+          <div class="pane-title-group">
+            <span class="pane-tag">Poste Réception & Hôtesses</span>
+            <h2>Kiosque d'Accueil & Numérisation Instantanée des Pièces</h2>
+            <p>Photographiez la pièce d'identité (CNI, Passeport, Permis). L'Intelligence Artificielle extrait et remplit le formulaire en moins de 2 secondes.</p>
+          </div>
+          <div class="pane-quick-metrics">
+            <div class="metric-mini">
+              <span class="metric-val">1.8s</span>
+              <span class="metric-lbl">Vitesse OCR</span>
+            </div>
+            <div class="metric-mini">
+              <span class="metric-val">0 papier</span>
+              <span class="metric-lbl">Registre 100% Digital</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="kiosk-grid">
+          <!-- COLONNE GAUCHE : MODULE SCAN OCR -->
+          <div class="kiosk-card scan-card">
+            <div class="card-header-styled">
+              <div class="card-title-row">
+                <span class="card-step-badge">Étape 1</span>
+                <h3>Numérisation de la Pièce d'Identité</h3>
+              </div>
+              <span class="ocr-status-tag" id="ocr-badge-status">Prêt pour numérisation</span>
+            </div>
+
+            <!-- Sélecteur rapide de documents -->
+            <div class="doc-preset-selector">
+              <span class="selector-label">📄 Choisir une pièce d'identité type ou importer :</span>
+              <div class="preset-buttons">
+                <button class="preset-btn active" onclick="loadSampleDoc('cni_ci')">
+                  <span class="preset-icon">🪪</span>
+                  <div class="preset-text">
+                    <strong>CNI Biométrique</strong>
+                    <small>Côte d'Ivoire / CEDEAO</small>
+                  </div>
+                </button>
+                <button class="preset-btn" onclick="loadSampleDoc('passport')">
+                  <span class="preset-icon">🛂</span>
+                  <div class="preset-text">
+                    <strong>Passeport International</strong>
+                    <small>Zone MRZ OACI 9303</small>
+                  </div>
+                </button>
+                <button class="preset-btn" onclick="loadSampleDoc('permis')">
+                  <span class="preset-icon">🚗</span>
+                  <div class="preset-text">
+                    <strong>Permis de Conduire</strong>
+                    <small>Format Carte Sécurisée</small>
+                  </div>
+                </button>
+                <label class="preset-btn upload-btn" title="Téléverser une image de document">
+                  <input type="file" id="custom-doc-input" accept="image/*" onchange="handleCustomDocUpload(event)" style="display:none;">
+                  <span class="preset-icon">📷</span>
+                  <div class="preset-text">
+                    <strong>Importer une photo</strong>
+                    <small>Scanner ou Caméra</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Zone de visualisation avec faisceau laser -->
+            <div class="scanner-viewport-wrapper">
+              <div class="scanner-viewport" id="scanner-viewport">
+                <div class="laser-scanner" id="laser-scanner"></div>
+
+                <div class="scanner-guides">
+                  <div class="guide-corner top-left"></div>
+                  <div class="guide-corner top-right"></div>
+                  <div class="guide-corner bottom-left"></div>
+                  <div class="guide-corner bottom-right"></div>
+                </div>
+
+                <div class="doc-preview-container" id="doc-preview-container">
+                  <div class="doc-card-render" id="doc-card-render">
+                    <!-- Rendu dynamique -->
+                  </div>
+                </div>
+
+                <div class="ocr-detection-boxes" id="ocr-detection-boxes"></div>
+              </div>
+
+              <div class="scanner-controls">
+                <button class="btn-action-scan" id="btn-trigger-scan" onclick="runDocumentOCR()">
+                  <span class="scan-btn-icon">⚡</span>
+                  <span id="scan-btn-text">Lancer l'Extraction OCR Instantanée</span>
+                </button>
+                <button class="btn-secondary-scan" onclick="resetScanner()">
+                  <span>🔄 Réinitialiser</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Télémétrie OCR -->
+            <div class="ocr-live-telemetry">
+              <div class="telemetry-item">
+                <span class="telem-label">Moteur IA :</span>
+                <span class="telem-val" id="telem-engine">Vision AI v2.4 (Biométrique)</span>
+              </div>
+              <div class="telemetry-item">
+                <span class="telem-label">Précision confiance :</span>
+                <span class="telem-val text-success" id="telem-confidence">99.8%</span>
+              </div>
+              <div class="telemetry-item">
+                <span class="telem-label">Temps d'exécution :</span>
+                <span class="telem-val" id="telem-time">1.64 s</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLONNE DROITE : FORMULAIRE PRÉ-REMPLI -->
+          <div class="kiosk-card form-card">
+            <div class="card-header-styled">
+              <div class="card-title-row">
+                <span class="card-step-badge">Étape 2 & 3</span>
+                <h3>Fiche Visiteur & Destination</h3>
+              </div>
+              <span class="fill-mode-badge" id="fill-mode-badge">⚡ Auto-rempli par l'OCR</span>
+            </div>
+
+            <form id="visitor-intake-form" onsubmit="handleVisitorSubmit(event)">
+              <div class="form-section-label">Identité Extraite de la Pièce</div>
+
+              <div class="form-row-photo-id">
+                <div class="visitor-avatar-box">
+                  <img id="form-visitor-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80" alt="Photo Visiteur">
+                  <span class="photo-extracted-tag">Photo Découpée</span>
+                </div>
+                <div class="form-row-2col flex-grow">
+                  <div class="form-group">
+                    <label>Nom de Famille :</label>
+                    <input type="text" id="v-lastname" class="ocr-field" required placeholder="Ex: KOUASSI">
+                  </div>
+                  <div class="form-group">
+                    <label>Prénoms :</label>
+                    <input type="text" id="v-firstname" class="ocr-field" required placeholder="Ex: Jean-Marc">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row-3col">
+                <div class="form-group">
+                  <label>Type de Document :</label>
+                  <select id="v-doctype" class="ocr-field">
+                    <option value="CNI">CNI Biométrique</option>
+                    <option value="Passeport">Passeport OACI</option>
+                    <option value="Permis">Permis de Conduire</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>N° de la Pièce :</label>
+                  <input type="text" id="v-docnumber" class="ocr-field highlight-field" required placeholder="Ex: CI 004829104">
+                </div>
+                <div class="form-group">
+                  <label>Nationalité :</label>
+                  <input type="text" id="v-nationality" class="ocr-field" required placeholder="Ex: Ivoirienne">
+                </div>
+              </div>
+
+              <div class="form-row-2col">
+                <div class="form-group">
+                  <label>Date de Naissance :</label>
+                  <input type="text" id="v-birthdate" class="ocr-field" placeholder="JJ/MM/AAAA">
+                </div>
+                <div class="form-group">
+                  <label>Date d'Expiration Pièce :</label>
+                  <input type="text" id="v-expirydate" class="ocr-field" placeholder="JJ/MM/AAAA">
+                </div>
+              </div>
+
+              <div class="form-section-label">Coordonnées & Destination de la Visite</div>
+
+              <div class="form-row-2col">
+                <div class="form-group">
+                  <label>Numéro de Téléphone (Mobile) :</label>
+                  <input type="tel" id="v-phone" required placeholder="+225 07 00 11 22 33">
+                </div>
+                <div class="form-group">
+                  <label>Entreprise / Organisation d'origine :</label>
+                  <input type="text" id="v-company" placeholder="Ex: Cabinet Audit Deloitte">
+                </div>
+              </div>
+
+              <div class="form-row-2col">
+                <div class="form-group">
+                  <label>Collaborateur / Hôte à rencontrer :</label>
+                  <select id="v-host" required>
+                    <option value="dg_kouassi">M. KOUASSI Jean — Directeur Général (DG)</option>
+                    <option value="drh_kouame">Mme KOUAME Marie — Directrice Ressources Humaines</option>
+                    <option value="daf_diarra">M. DIARRA Cheick — Directeur Financier (DAF)</option>
+                    <option value="dsi_kone">M. KONE Ibrahim — Responsable Informatique (DSI)</option>
+                    <option value="juridique_ble">Me BLÉ Patricia — Service Juridique & Conformité</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Motif de la Visite :</label>
+                  <select id="v-purpose">
+                    <option value="Rendez-vous Professionnel / Partenariat">Rendez-vous Professionnel / Partenariat</option>
+                    <option value="Entretien de Recrutement">Entretien de Recrutement</option>
+                    <option value="Signature d'Acte / Contrat">Signature d'Acte / Contrat</option>
+                    <option value="Dépôt de Factures / Courrier Confidentiel">Dépôt de Factures / Courrier Confidentiel</option>
+                    <option value="Audit / Maintenance Technique">Audit / Maintenance Technique</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-actions-bar">
+                <button type="submit" class="btn-submit-intake">
+                  <span class="btn-icon">⚡</span>
+                  <span>Valider & Transmettre à l'Hôte</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- ────────────────────────────────────────────── -->
+      <!-- DÉMO SOUS-ONGLET 2 : VALIDATION DIRECTION DG   -->
+      <!-- ────────────────────────────────────────────── -->
+      <div id="tab-validation" class="demo-pane">
+        <div class="pane-header">
+          <div class="pane-title-group">
+            <span class="pane-tag">Expérience Collaborateur & Hôte</span>
+            <h2>Module Validation Hiérarchique & Direction Générale</h2>
+            <p>Le collaborateur ou le DG reçoit une alerte instantanée sur son smartphone (Push / WhatsApp / SMS) et valide ou refuse l'accès en 1 clic.</p>
+          </div>
+        </div>
+
+        <div class="validation-layout">
+          <!-- SIMULATEUR SMARTPHONE EN DIRECT -->
+          <div class="phone-mockup-wrapper">
+            <div class="phone-frame">
+              <div class="phone-speaker"></div>
+              <div class="phone-screen">
+                <div class="phone-status-bar">
+                  <span>09:41</span>
+                  <div class="phone-status-icons">
+                    <span>📶 5G</span>
+                    <span>🔋 98%</span>
+                  </div>
+                </div>
+
+                <div class="chat-app-header">
+                  <div class="chat-avatar-host">🛡️</div>
+                  <div class="chat-header-info">
+                    <strong>VISIOREG Assistant</strong>
+                    <small>Service Sécurité & Réception • Officiel</small>
+                  </div>
+                </div>
+
+                <div class="chat-body" id="chat-stream">
+                  <div class="chat-date-separator">Aujourd'hui</div>
+
+                  <div class="chat-bubble bot-message" id="active-phone-notification">
+                    <div class="notification-badge-alert">🔔 NOUVEAU VISITEUR À L'ACCUEIL</div>
+                    <div class="visitor-mini-card">
+                      <img id="phone-v-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Visiteur">
+                      <div class="visitor-mini-details">
+                        <strong id="phone-v-name">M. KOUASSI Jean-Marc</strong>
+                        <span id="phone-v-company">Cabinet Audit Deloitte</span>
+                        <span class="doc-verified-check">✓ CNI Vérifiée par OCR</span>
+                      </div>
+                    </div>
+                    <p class="notification-text">
+                      Bonjour <strong>M. KOUASSI Jean (DG)</strong>,<br>
+                      Ce visiteur s'est présenté au poste de garde pour le motif suivant :<br>
+                      <em id="phone-v-purpose">« Rendez-vous Professionnel / Partenariat »</em>.
+                    </p>
+                    <div class="chat-quick-actions">
+                      <button class="chat-action-btn accept" onclick="respondToVisit('APPROVED')">
+                        <span>✅ Accepter l'accès</span>
+                      </button>
+                      <button class="chat-action-btn delay" onclick="respondToVisit('DELAYED')">
+                        <span>⏳ Patienter 5 min</span>
+                      </button>
+                      <button class="chat-action-btn reject" onclick="respondToVisit('REJECTED')">
+                        <span>❌ Refuser</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="chat-bubble status-feedback hidden" id="phone-response-log"></div>
+                </div>
+              </div>
+              <div class="phone-home-indicator"></div>
+            </div>
+          </div>
+
+          <!-- TABLE DES DEMANDES EN ATTENTE -->
+          <div class="validation-supervision-card">
+            <div class="card-header-styled">
+              <div class="card-title-row">
+                <span class="card-step-badge">File Active</span>
+                <h3>Demandes d'Accès en Attente de Réponse</h3>
+              </div>
+              <span class="refresh-indicator">Actualisation en direct</span>
+            </div>
+
+            <div class="pending-table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Heure</th>
+                    <th>Visiteur</th>
+                    <th>Document</th>
+                    <th>Collaborateur Demandé</th>
+                    <th>Motif</th>
+                    <th>Statut</th>
+                    <th>Actions d'Urgence</th>
+                  </tr>
+                </thead>
+                <tbody id="pending-visits-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ────────────────────────────────────────────── -->
+      <!-- DÉMO SOUS-ONGLET 3 : BORNE SORTIES CHECK-OUT   -->
+      <!-- ────────────────────────────────────────────── -->
+      <div id="tab-checkout" class="demo-pane">
+        <div class="pane-header">
+          <div class="pane-title-group">
+            <span class="pane-tag">Poste Vigile & Portique de Sortie</span>
+            <h2>Borne de Check-Out & Clôture de Visite</h2>
+            <p>Scannez le badge QR Code du visiteur ou recherchez son nom pour enregistrer son heure de sortie et clore l'accès.</p>
+          </div>
+        </div>
+
+        <div class="checkout-grid">
+          <div class="checkout-scanner-box">
+            <h3>📟 Scan du Pass Visiteur</h3>
+            <p>Passez le badge devant le lecteur optique :</p>
+            <div class="qr-target-box">
+              <div class="qr-scan-line"></div>
+              <div class="qr-frame-corners"></div>
+              <div class="qr-placeholder-icon">🔲</div>
+            </div>
+            <div class="manual-code-entry">
+              <label>Ou saisissez le code visiteur (ex: VIS-7821) :</label>
+              <div class="code-input-row">
+                <input type="text" id="manual-checkout-code" placeholder="VIS-XXXX">
+                <button class="btn-primary" onclick="handleManualCheckout()">Valider Sortie</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="active-inside-list-card">
+            <div class="card-header-styled">
+              <h3>👥 Personnes Actuellement dans le Bâtiment</h3>
+              <span class="badge-active-visitors" id="checkout-count-badge">3 personnes</span>
+            </div>
+            <p class="helper-text">Cliquez sur « Enregistrer Sortie » pour clôturer immédiatement la visite du visiteur qui quitte les locaux :</p>
+            
+            <div class="inside-visitors-list" id="inside-visitors-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ────────────────────────────────────────────── -->
+      <!-- DÉMO SOUS-ONGLET 4 : REGISTRE & ÉVACUATION     -->
+      <!-- ────────────────────────────────────────────── -->
+      <div id="tab-register" class="demo-pane">
+        <div class="pane-header">
+          <div class="pane-title-group">
+            <span class="pane-tag">Traçabilité & Piste d'Audit</span>
+            <h2>Registre Numérique Centralisé & Mode Évacuation</h2>
+            <p>Consultez l'historique complet, filtrez par date, exportez au format officiel ou déclenchez le protocole d'évacuation incendie.</p>
+          </div>
+          <div class="register-actions-top">
+            <button class="btn-fire-alarm" onclick="triggerEvacuationModal()">
+              <span class="alarm-icon">🚨</span>
+              <span>Protocole Évacuation Incendie</span>
+            </button>
+            <button class="btn-export-excel" onclick="exportRegisterToCSV()">
+              <span>📥 Exporter Excel / CSV</span>
+            </button>
+            <button class="btn-print-register" onclick="window.print()">
+              <span>🖨️ Imprimer Registre</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="register-filter-bar">
+          <div class="search-input-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="register-search" placeholder="Rechercher par nom, N° de pièce, entreprise ou collaborateur..." oninput="filterRegisterTable()">
+          </div>
+          <div class="filter-pills">
+            <button class="filter-pill active" onclick="setRegisterFilter('ALL', this)">Tous</button>
+            <button class="filter-pill" onclick="setRegisterFilter('ACTIVE', this)">Présents dans les locaux</button>
+            <button class="filter-pill" onclick="setRegisterFilter('COMPLETED', this)">Sortis aujourd'hui</button>
+            <button class="filter-pill" onclick="setRegisterFilter('REJECTED', this)">Refusés</button>
+          </div>
+        </div>
+
+        <div class="table-responsive-wrapper">
+          <table class="data-table" id="master-register-table">
+            <thead>
+              <tr>
+                <th>Code Visite</th>
+                <th>Visiteur & Identité</th>
+                <th>Type & N° Pièce</th>
+                <th>Entreprise</th>
+                <th>Hôte Rencontré</th>
+                <th>Heure Entrée</th>
+                <th>Heure Sortie</th>
+                <th>Durée</th>
+                <th>Statut</th>
+                <th>Fiche</th>
+              </tr>
+            </thead>
+            <tbody id="master-register-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ────────────────────────────────────────────── -->
+      <!-- DÉMO SOUS-ONGLET 5 : KPIS & STATISTIQUES       -->
+      <!-- ────────────────────────────────────────────── -->
+      <div id="tab-stats" class="demo-pane">
+        <div class="pane-header">
+          <div class="pane-title-group">
+            <span class="pane-tag">Direction & Sécurité</span>
+            <h2>Tableau de Bord & Indicateurs de Fréquentation</h2>
+            <p>Analyse analytique des flux d'accès, départements les plus sollicités et temps moyen d'attente à l'accueil.</p>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-box blue">👥</div>
+            <div class="kpi-content">
+              <span class="kpi-title">Visiteurs Aujourd'hui</span>
+              <span class="kpi-value" id="kpi-today-count">18</span>
+              <span class="kpi-trend positive">↑ +24% par rapport à hier</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-box green">🏢</div>
+            <div class="kpi-content">
+              <span class="kpi-title">Actuellement dans les Locaux</span>
+              <span class="kpi-value text-success" id="kpi-inside-count">3</span>
+              <span class="kpi-sub">Capacité maximale : 150 personnes</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-box amber">⏱️</div>
+            <div class="kpi-content">
+              <span class="kpi-title">Temps Moyen de Visite</span>
+              <span class="kpi-value">44 min</span>
+              <span class="kpi-sub">Conforme aux standards d'accueil</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-box purple">⚡</div>
+            <div class="kpi-content">
+              <span class="kpi-title">Temps Moyen Enregistrement</span>
+              <span class="kpi-value">22 sec</span>
+              <span class="kpi-trend positive">Divisé par 4 grâce à l'OCR</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>📈 Courbe d'Affluence par Heure (Aujourd'hui)</h3>
+              <span class="chart-badge">Pics à 10h et 14h30</span>
+            </div>
+            <div class="chart-canvas-box">
+              <canvas id="chart-hourly" height="220"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>🏢 Répartition des Visites par Direction</h3>
+              <span class="chart-badge">Direction Générale en tête</span>
+            </div>
+            <div class="chart-canvas-box">
+              <canvas id="chart-departments" height="220"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- MODAL : BADGE VISITEUR PHYSIQUE ÉMIS           -->
+  <!-- ============================================== -->
+  <div id="badge-modal" class="modal-overlay hidden">
+    <div class="modal-card-badge">
+      <div class="modal-header">
+        <span class="badge-gen-success">✅ Badge Visiteur Émis</span>
+        <button class="modal-close-btn" onclick="closeBadgeModal()">✕</button>
+      </div>
+
+      <div class="physical-badge" id="printable-badge">
+        <div class="badge-corp-header">
+          <div class="badge-corp-logo">🛡️ VISIOREG ENTERPRISE</div>
+          <span class="badge-access-tag">PASS VISITEUR</span>
+        </div>
+
+        <div class="badge-main-content">
+          <div class="badge-photo-frame">
+            <img id="badge-visitor-photo" src="" alt="Photo Visiteur">
+          </div>
+          <div class="badge-visitor-meta">
+            <h3 id="badge-visitor-name">M. KOUASSI Jean-Marc</h3>
+            <span class="badge-visitor-company" id="badge-visitor-company">Cabinet Audit Deloitte</span>
+            <div class="badge-access-details">
+              <div><strong>Hôte :</strong> <span id="badge-visitor-host">DG</span></div>
+              <div><strong>Entrée :</strong> <span id="badge-checkin-time">09:42</span></div>
+              <div><strong>Code :</strong> <span class="badge-code-text" id="badge-visitor-code">VIS-8924</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="badge-qr-section">
+          <div class="badge-qr-render" id="badge-qr-render"></div>
+          <p class="badge-security-instructions">Présenter ce badge au portique à la sortie pour enregistrer votre départ.</p>
+        </div>
+      </div>
+
+      <div class="badge-modal-actions">
+        <button class="btn-primary" onclick="printBadge()">
+          <span>🖨️ Imprimer le Badge Thermique</span>
+        </button>
+        <button class="btn-secondary" onclick="simulateWhatsAppSend()">
+          <span>📲 Envoyer sur le WhatsApp du Visiteur</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL : LISTE D'ÉVACUATION INCENDIE (SÉCURITÉ) -->
+  <!-- ============================================== -->
+  <div id="evacuation-modal" class="modal-overlay hidden">
+    <div class="modal-card-evacuation">
+      <div class="evacuation-banner">
+        <span class="fire-icon">🚨</span>
+        <div>
+          <h2>LISTE NOMINATIVE D'ÉVACUATION D'URGENCE</h2>
+          <p>Toutes les personnes extérieures actuellement présentes dans l'édifice au <span id="evac-timestamp"></span></p>
+        </div>
+        <button class="modal-close-btn" onclick="closeEvacuationModal()">✕</button>
+      </div>
+
+      <div class="evacuation-table-wrapper">
+        <table class="data-table evacuation-table">
+          <thead>
+            <tr>
+              <th>Nom & Prénoms</th>
+              <th>Téléphone</th>
+              <th>Entreprise</th>
+              <th>Collaborateur Visité</th>
+              <th>Heure Arrivée</th>
+              <th>N° Pièce</th>
+            </tr>
+          </thead>
+          <tbody id="evacuation-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="evacuation-actions">
+        <button class="btn-primary" onclick="window.print()">
+          <span>🖨️ Imprimer Immédiatement pour les Pompiers</span>
+        </button>
+        <button class="btn-secondary" onclick="closeEvacuationModal()">
+          <span>Fermer le protocole</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast de notification -->
+  <div id="app-toast" class="toast-container hidden">
+    <div class="toast-content">
+      <span class="toast-icon" id="toast-icon">⚡</span>
+      <span class="toast-message" id="toast-message">Notification</span>
+    </div>
+  </div>
+
+  <!-- Logique applicative JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
